@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"type": "module",
 	"scripts": {
+		"predev": "pnpm data",
 		"dev": "vite dev",
 		"build": "pnpm run data && vite build",
 		"preview": "vite preview",

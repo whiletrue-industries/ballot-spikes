@@ -3,3 +3,4 @@ node_modules
 build
 .DS_Store
 data/raw
+src/lib/data/election.json

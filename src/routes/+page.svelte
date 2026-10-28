@@ -83,14 +83,18 @@
 				import('gsap/ScrollTrigger')
 			]);
 			gsap.registerPlugin(ScrollTrigger);
+			// mobile browser chrome (address bar) resizing the viewport shouldn't re-measure every trigger
+			ScrollTrigger.config({ ignoreMobileResize: true });
+			const mobile = window.matchMedia('(max-width: 819px)').matches;
+			const line = mobile ? 'top 80%' : 'top 70%';
 			stage = await Stage.create(stageEl, e);
 			if (import.meta.env.DEV) (window as unknown as { stage: Stage }).stage = stage;
 			stage.set({ step, p, pick });
 			const triggers = [...document.querySelectorAll<HTMLElement>('[data-step]')].map((el) =>
 				ScrollTrigger.create({
 					trigger: el,
-					start: 'top 70%',
-					end: 'bottom 70%',
+					start: line,
+					end: line.replace('top', 'bottom'),
 					onUpdate: (self) => {
 						if (!self.isActive) return;
 						step = el.dataset.step as Step;
@@ -129,6 +133,14 @@
 		{#if e.status === 'partial'}<span class="partial">חלקיות · {e.countedPercent ?? '?'}% נספרו</span>{/if}
 	</span>
 </header>
+
+{#if step === 'bader' && awarded > 0 && current}
+	<div class="ticker" aria-hidden="true">
+		<span class="seatno">מנדט {current.seat}</span>
+		<b>{entityName(current.winner)}</b>
+		<span class="num">{fmt(current.candidates.find((c) => c.entity === current.winner)?.ratio ?? 0)}</span>
+	</div>
+{/if}
 
 <main class="story">
 	<section data-step="title" class="step title">

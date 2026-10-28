@@ -127,6 +127,9 @@ export class Stage {
 			resolution: Math.min(window.devicePixelRatio, 2)
 		});
 		el.appendChild(s.app.canvas);
+		// the stage is display-only: no Pixi hit-testing, and touches must scroll the page
+		s.app.stage.eventMode = 'none';
+		s.app.canvas.style.touchAction = 'auto';
 		s.build();
 		s.layout();
 		s.app.ticker.add((t) => s.tick(t.deltaMS / 1000));
@@ -241,14 +244,18 @@ export class Stage {
 	}
 
 	layout() {
-		this.W = window.innerWidth;
-		this.H = window.innerHeight;
+		const w = window.innerWidth;
+		const h = window.innerHeight;
+		// on phones the address bar shows/hides while scrolling; don't let that jolt the spikes
+		if (w === this.W && w < 820 && Math.abs(h - this.H) < 160) return;
+		this.W = w;
+		this.H = h;
 		this.mobile = this.W < 820;
 		if (this.mobile) {
-			this.x0 = 8;
-			this.x1 = this.W - 8;
-			this.y0 = 70;
-			this.base = this.H * 0.56 - 30;
+			this.x0 = 6;
+			this.x1 = this.W - 6;
+			this.y0 = 64;
+			this.base = this.H - 64;
 		} else {
 			this.x0 = 32;
 			this.x1 = this.W * 0.6;
