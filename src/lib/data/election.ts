@@ -27,6 +27,8 @@ export interface Election {
 	agreements: [string, string][];
 	allocation: Allocation;
 	sensitivity: Record<string, Sensitivity>;
+	/** per surplus pair: seat changes it caused vs. the same election without that agreement */
+	agreementEffects: Record<string, { id: string; delta: number }[]>;
 }
 
 export const election = raw as unknown as Election;

@@ -329,21 +329,43 @@
 		</div>
 	</section>
 
-	<section data-step="split" class="step">
+	<section data-step="split" class="step flow">
 		<div class="card">
 			<h2>ובתוך הזוג</h2>
 			<p>
-				זוג שקיבל מנדטים מחלק אותם בין שתי הרשימות באותה שיטה בדיוק, רק בקטן: מודד חדש של הזוג, פרוסות שלמות, ואז
-				באדר־עופר על מה שנשאר.
+				כל זוג מחלק את המנדטים שלו באותה שיטה, בקטן: קולות הזוג ÷ המנדטים שלו = <b>מודד הזוג</b>. כל רשימה מקבלת
+				מנדט על כל מודד שלם, ומנדט שנשאר הולך לעודף הגדול.
 			</p>
-			<ul class="pairs">
+			<div class="pairsplits">
 				{#each a.pairSplits as ps (ps.entity)}
-					<li>
-						<b>{entityName(ps.entity)}</b>: {ps.seats} מנדטים →
-						{ps.members.map((m) => `${nameOf(m)} ${a.seats[m]}`).join(', ')}
-					</li>
+					{@const effect = e.agreementEffects?.[ps.entity] ?? []}
+					{@const won = effect.filter((c) => c.delta > 0)}
+					{@const lostTo = effect.filter((c) => c.delta < 0)}
+					<div class="ps">
+						<div class="ps-head">
+							<span>{entityName(ps.entity)}</span>
+							<small>מודד <span class="num">{fmt(ps.quota)}</span></small>
+							<b class="num">{ps.seats}</b>
+						</div>
+						{#each ps.members as m (m)}
+							{@const extra = a.seats[m] - ps.floor[m]}
+							<div class="ps-row" class:mine={pick === m}>
+								<span>{nameOf(m)}</span>
+								<small>{ps.floor[m]} שלמים{extra > 0 ? ` + ${extra} מהעודף` : ''}</small>
+								<b class="num">{a.seats[m]}</b>
+							</div>
+						{/each}
+						<div class="ps-note" class:hit={won.length > 0}>
+							{#if won.length}
+								בזכות ההסכם: {won.map((c) => `+${c.delta} ל${nameOf(c.id)}`).join(', ')}{#if lostTo.length}, על
+									חשבון {joinHe(lostTo.map((c) => nameOf(c.id)))}{/if}.
+							{:else}
+								בלי ההסכם — אותה תוצאה.
+							{/if}
+						</div>
+					</div>
 				{/each}
-			</ul>
+			</div>
 		</div>
 	</section>
 
