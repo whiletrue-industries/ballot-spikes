@@ -66,7 +66,7 @@ const out = {
 	lists: [
 		...big.map(([id, votes]) => ({ id, letters: id, name: known.get(id) ?? id, fullName: fullNames.get(id) ?? id, votes })),
 		...(small.length
-			? [{ id: 'others', letters: '', name: `עוד ${small.length} רשימות`, votes: small.reduce((s, [, v]) => s + v, 0), group: true }]
+			? [{ id: 'others', letters: '', name: `עוד ${small.length} רשימות`, votes: small.reduce((s, [, v]) => s + v, 0), group: true, count: small.length }]
 			: [])
 	],
 	agreements: meta.agreements

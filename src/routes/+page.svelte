@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { election as e, fmt, pct, listById, inkOf } from '$lib/data/election';
+	import { election as e, fmt, pct, listById, inkOf, listCount } from '$lib/data/election';
 	import history from '$lib/data/history.json';
 	import { BLANK, surplusAwarded, type Step } from '$lib/story/timeline';
 	import type { Stage } from '$lib/stage/Stage';
@@ -11,6 +11,8 @@
 	const lists = e.lists.filter((l) => !l.group);
 	const failed = a.failed.map((id) => listById[id]);
 	const wasted = failed.reduce((s, l) => s + l.votes, 0);
+	const failedCount = failed.reduce((s, l) => s + listCount(l), 0);
+	const ranCount = e.lists.reduce((s, l) => s + listCount(l), 0);
 	const surplusN = a.surplusSteps.length;
 	const pairs = a.entities.filter((x) => x.members.length > 1);
 	const dropped = e.agreements.filter(([x, y]) => !pairs.some((p) => p.members.includes(x) && p.members.includes(y)));
@@ -255,7 +257,7 @@
 				> קולות.
 			</p>
 			<p>
-				{failed.length} רשימות לא עברו. {fmt(wasted)} קולות — {pct((wasted / a.validVotes) * 100, 1)} מהקולות הכשרים —
+				{failedCount} מתוך {ranCount} הרשימות שהתמודדו לא עברו. {fmt(wasted)} קולות — {pct((wasted / a.validVotes) * 100, 1)} מהקולות הכשרים —
 				לא יהפכו לאף מנדט.
 			</p>
 			{#if picked && a.failed.includes(picked.id)}

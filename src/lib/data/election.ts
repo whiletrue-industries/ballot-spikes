@@ -9,6 +9,8 @@ export interface List {
 	fullName?: string;
 	votes: number;
 	group?: boolean;
+	/** for a group: how many lists it stands for */
+	count?: number;
 }
 
 export interface Election {
@@ -38,6 +40,9 @@ export const inkOf = (id: string) => {
 	const i = election.lists.findIndex((l) => l.id === id);
 	return INKS[i % INKS.length];
 };
+
+/** Number of real lists behind a spike (the "others" spike groups many). */
+export const listCount = (l: List) => (l.group ? (l.count ?? Number(l.name.match(/\d+/)?.[0] ?? 1)) : 1);
 
 export const listById = Object.fromEntries(election.lists.map((l) => [l.id, l])) as Record<string, List>;
 
