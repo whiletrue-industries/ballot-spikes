@@ -15,6 +15,7 @@ async function load(): Promise<Uint8Array> {
 	if (existsSync(src)) return readFileSync(src);
 	const res = await fetch(src, { headers: { 'User-Agent': 'Mozilla/5.0 (ballot-spikes)' } });
 	if (!res.ok) throw new Error(`${src}: HTTP ${res.status}`);
+	if ((res.headers.get('content-type') ?? '').includes('text/html')) throw new Error(`${src}: got an HTML page, not CSV`);
 	const buf = new Uint8Array(await res.arrayBuffer());
 	mkdirSync('data/raw', { recursive: true });
 	writeFileSync(`data/raw/expb-${new Date().toISOString().replace(/[:.]/g, '-')}.csv`, buf);

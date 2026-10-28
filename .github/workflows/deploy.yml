@@ -1,0 +1,61 @@
+name: Fetch results & deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 * * * *' # hourly while the count settles
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The committee's site may be unreachable from GitHub's runners; if so, the committed data is used.
+      - name: Fetch latest results
+        id: fetch
+        continue-on-error: true
+        env:
+          RESULTS_URL: ${{ vars.RESULTS_URL }}
+        run: pnpm results
+
+      - name: Commit refreshed data
+        if: steps.fetch.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/k26.json
+          git diff --cached --quiet || (git commit -m "Update Knesset 26 results" && git push)
+
+      - run: pnpm test
+      - run: pnpm build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
