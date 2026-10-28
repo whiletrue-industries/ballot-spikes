@@ -478,6 +478,33 @@ b {
 	text-decoration: underline 2px var(--envelope);
 }
 
+.nearest {
+	margin-top: 0.9rem;
+	padding-top: 0.7rem;
+	border-top: 1px dashed rgba(27, 27, 27, 0.25);
+}
+.nearest h3 {
+	font-size: 1.05rem;
+	margin-bottom: 0.2rem;
+}
+.nearest .note {
+	margin-bottom: 0.4rem;
+}
+.nearest ol {
+	margin: 0;
+	padding-inline-start: 1.2rem;
+	font-size: 0.85rem;
+}
+.nearest li {
+	margin-bottom: 0.25rem;
+}
+.nearest li span {
+	color: var(--muted);
+}
+.nearest li .num {
+	color: var(--stamp);
+	font-weight: 700;
+}
 .finale .big {
 	font-family: var(--head);
 	font-size: 1.7rem;

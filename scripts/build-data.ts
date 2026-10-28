@@ -41,6 +41,7 @@ for (const l of raw.lists) {
 	if (!s) continue;
 	console.log(
 		`${l.letters.padEnd(4)} ${String(allocation.seats[l.id]).padStart(3)}  ` +
-			(s.passed ? `-${s.removeToChange} → ${JSON.stringify(s.changesOnRemove)}` : `missing ${s.missingToPass}`)
+			(s.passed ? `-${s.removeToChange} → ${JSON.stringify(s.changesOnRemove)}` : `missing ${s.missingToPass}`) +
+			`   +${s.addToGain} to gain → ${JSON.stringify(s.changesOnGain)}`
 	);
 }

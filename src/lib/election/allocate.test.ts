@@ -41,6 +41,20 @@ describe('sensitivity', () => {
 		expect(at(k)).not.toEqual(allocate(input).seats);
 	});
 
+	it('finds the minimum added votes that give a list (or its pair) another seat', () => {
+		const at = (id: string, d: number) =>
+			allocate({ ...input, lists: input.lists.map((l) => (l.id === id ? { ...l, votes: l.votes + d } : l)) }).seats;
+		for (const id of ['ל', 'מחל', 'אמת']) {
+			const s = sensitivity(input, id);
+			const group = input.agreements.find((ag) => ag.includes(id)) ?? [id];
+			const total = (seats: Record<string, number>) => group.reduce((t, g) => t + seats[g], 0);
+			const base = total(allocate(input).seats);
+			expect(s.addToGain).toBeGreaterThan(0);
+			expect(total(at(id, s.addToGain! - 1))).toBe(base);
+			expect(total(at(id, s.addToGain!))).toBeGreaterThan(base);
+		}
+	});
+
 	it('reports votes missing to pass for a failed list', () => {
 		const s = sensitivity(input, 'מרצ');
 		expect(s.passed).toBe(false);

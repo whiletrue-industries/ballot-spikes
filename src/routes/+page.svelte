@@ -59,6 +59,26 @@
 			})
 		: null;
 
+	// Closest to another seat: per list (or surplus pair), the fewest added votes that win it a seat.
+	const nearest = (() => {
+		const best = new Map<string, { key: string; label: string; votes: number; passes: boolean; losers: string[] }>();
+		for (const l of lists) {
+			const s = e.sensitivity[l.id];
+			if (!s?.addToGain) continue;
+			const ent = a.entities.find((x) => x.members.includes(l.id));
+			const key = ent?.id ?? l.id;
+			if ((best.get(key)?.votes ?? Infinity) <= s.addToGain) continue;
+			best.set(key, {
+				key,
+				label: ent ? entityName(ent.id) : l.name,
+				votes: s.addToGain,
+				passes: !s.passed,
+				losers: s.changesOnGain.filter((c) => c.delta < 0).map((c) => nameOf(c.id))
+			});
+		}
+		return [...best.values()].sort((x, y) => x.votes - y.votes).slice(0, 3);
+	})();
+
 	const picked = $derived(pick && pick !== BLANK ? listById[pick] : null);
 	const sens = $derived(pick && pick !== BLANK ? e.sensitivity[pick] : null);
 	const awarded = $derived(step === 'bader' ? surplusAwarded(p, surplusN) : 0);
@@ -393,6 +413,23 @@
 					</li>
 				{/each}
 			</ul>
+			{#if nearest.length}
+				<div class="nearest">
+					<h3>הכי קרובים למנדט נוסף</h3>
+					<p class="note">כמה קולות נוספים היו מוסיפים מנדט לרשימה (או לזוג שלה):</p>
+					<ol>
+						{#each nearest as n (n.key)}
+							<li>
+								<b>{n.label}:</b>
+								<span>
+									עוד <span class="num">{fmt(n.votes)}</span> קולות{#if n.passes}{' '}— ותעבור את אחוז החסימה{:else if n.losers.length}{' '}(על
+										חשבון {joinHe(n.losers)}){/if}
+								</span>
+							</li>
+						{/each}
+					</ol>
+				</div>
+			{/if}
 		</div>
 	</section>
 
