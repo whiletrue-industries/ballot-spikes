@@ -1,0 +1,11 @@
+{
+	"_note": "Turnout and valid votes per Central Elections Committee final results. listsRan should be re-verified against the committee's site before publishing.",
+	"elections": [
+		{ "knesset": 20, "year": "2015", "turnout": 72.34, "valid": 4210884, "listsRan": 25, "listsPassed": 10 },
+		{ "knesset": 21, "year": "4/2019", "turnout": 68.46, "valid": 4309270, "listsRan": 40, "listsPassed": 11 },
+		{ "knesset": 22, "year": "9/2019", "turnout": 69.83, "valid": 4436806, "listsRan": 29, "listsPassed": 9 },
+		{ "knesset": 23, "year": "2020", "turnout": 71.52, "valid": 4592066, "listsRan": 29, "listsPassed": 8 },
+		{ "knesset": 24, "year": "2021", "turnout": 67.44, "valid": 4410052, "listsRan": 39, "listsPassed": 13 },
+		{ "knesset": 25, "year": "2022", "turnout": 70.63, "valid": 4764742, "listsRan": 40, "listsPassed": 10 }
+	]
+}

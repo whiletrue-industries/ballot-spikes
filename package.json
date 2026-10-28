@@ -1,0 +1,31 @@
+{
+	"name": "ballot-spikes",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "pnpm run data && vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"test": "vitest run",
+		"data": "tsx scripts/build-data.ts",
+		"results": "tsx scripts/fetch-results.ts"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@types/node": "^26.6.5",
+		"svelte": "^5.57.3",
+		"svelte-check": "^4.7.7",
+		"tsx": "^4.23.15",
+		"typescript": "^5.9.3",
+		"vite": "^8.3.5",
+		"vitest": "^5.0.5"
+	},
+	"dependencies": {
+		"gsap": "^3.15.0",
+		"pixi.js": "^8.22.0"
+	}
+}
