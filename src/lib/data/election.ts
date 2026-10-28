@@ -6,6 +6,7 @@ export interface List {
 	id: string;
 	letters: string;
 	name: string;
+	fullName?: string;
 	votes: number;
 	group?: boolean;
 }

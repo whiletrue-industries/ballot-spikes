@@ -182,6 +182,7 @@
 						class:chosen={pick === l.id}
 						role="radio"
 						aria-checked={pick === l.id}
+						title={l.fullName ?? l.name}
 						onclick={() => choose(l.id)}
 					>
 						<span class="letters">{l.letters}</span>

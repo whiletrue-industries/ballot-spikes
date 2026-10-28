@@ -22,7 +22,7 @@ pnpm build      # → build/ (static, deployable anywhere)
 To refresh Knesset 26 counts:
 
 ```sh
-pnpm results                                  # fetches https://votes26.bechirot.gov.il/expb.csv
+pnpm results                                  # fetches https://media26.bechirot.gov.il/files/expb.csv
 pnpm results path/to/downloaded/expb.csv      # or from a file downloaded by hand
 RESULTS_URL=https://… pnpm results            # or another URL
 pnpm data                                     # recompute allocation + sensitivity → src/lib/data/election.json

@@ -1,6 +1,98 @@
 {
-	"_note": "Fill in from the Central Elections Committee: ballot letters, list names as printed, eligible voters, and the published surplus agreements (pairs of letters).",
-	"eligible": 0,
-	"agreements": [],
-	"lists": []
+	"_note": "Ballot letters → names (short name for slips, fullName as printed). Agreements per the Central Elections Committee / press reports after the 16.10.2026 deadline. eligible = בעלי זכות בחירה.",
+	"eligible": 7331981,
+	"agreements": [
+		[
+			"מחל",
+			"ט"
+		],
+		[
+			"שס",
+			"ג"
+		],
+		[
+			"רק",
+			"ל"
+		],
+		[
+			"ודם",
+			"עם"
+		],
+		[
+			"דרך",
+			"אמת"
+		]
+	],
+	"lists": [
+		{
+			"letters": "מחל",
+			"name": "הליכוד",
+			"fullName": "הליכוד בהנהגת בנימין נתניהו לראשות הממשלה"
+		},
+		{
+			"letters": "דרך",
+			"name": "ישר!",
+			"fullName": "ישר! עם איזנקוט לראשות הממשלה מאחדים את ישראל"
+		},
+		{
+			"letters": "רק",
+			"name": "ביחד",
+			"fullName": "ביחד בראשות נפתלי בנט"
+		},
+		{
+			"letters": "ודם",
+			"name": "הרשימה המשותפת",
+			"fullName": "הרשימה המשותפת"
+		},
+		{
+			"letters": "אמת",
+			"name": "הדמוקרטים",
+			"fullName": "הדמוקרטים בראשות יאיר גולן"
+		},
+		{
+			"letters": "ג",
+			"name": "יהדות התורה",
+			"fullName": "יהדות התורה והשבת אגודת ישראל - דגל התורה"
+		},
+		{
+			"letters": "ל",
+			"name": "ישראל ביתנו",
+			"fullName": "ישראל ביתנו בראשות אביגדור ליברמן"
+		},
+		{
+			"letters": "שס",
+			"name": "ש״ס",
+			"fullName": "התאחדות הספרדים שומרי תורה תנועתו של מרן הרב עובדיה יוסף זצ\"ל"
+		},
+		{
+			"letters": "ב",
+			"name": "עוצמה יהודית",
+			"fullName": "עוצמה יהודית בראשות איתמר בן גביר"
+		},
+		{
+			"letters": "ט",
+			"name": "הציונות הדתית",
+			"fullName": "הציונות הדתית בראשות בצלאל סמוטריץ' וזהות בראשות משה פייגלין"
+		},
+		{
+			"letters": "עם",
+			"name": "רע״מ",
+			"fullName": "רע\"ם - הרשימה הערבית המאוחדת"
+		},
+		{
+			"letters": "די",
+			"name": "המילואימניקים",
+			"fullName": "המילואימניקים והכלכלית בראשות יועז הנדל וירון זליכה"
+		},
+		{
+			"letters": "ך",
+			"name": "עמך ישראל",
+			"fullName": "עמך ישראל בראשות עופר וינטר"
+		},
+		{
+			"letters": "כן",
+			"name": "כחול לבן",
+			"fullName": "כחול לבן בראשות בני גנץ"
+		}
+	]
 }

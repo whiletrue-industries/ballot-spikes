@@ -1,14 +1,14 @@
 // Downloads (or reads) the Central Elections Committee per-ballot-box CSV and writes data/k26.json.
 // Usage: pnpm results [url-or-file]
-//   default source: $RESULTS_URL or https://votes26.bechirot.gov.il/expb.csv
+//   default source: $RESULTS_URL or https://media26.bechirot.gov.il/files/expb.csv
 // List names, letters and surplus agreements come from data/k26-lists.json (hand-maintained).
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
-const src = process.argv[2] ?? process.env.RESULTS_URL ?? 'https://votes26.bechirot.gov.il/expb.csv';
+const src = process.argv[2] ?? process.env.RESULTS_URL ?? 'https://media26.bechirot.gov.il/files/expb.csv';
 const meta = JSON.parse(readFileSync('data/k26-lists.json', 'utf8')) as {
 	eligible: number;
 	agreements: [string, string][];
-	lists: { letters: string; name: string }[];
+	lists: { letters: string; name: string; fullName?: string }[];
 };
 
 async function load(): Promise<Uint8Array> {
@@ -43,6 +43,7 @@ const totals = Object.fromEntries(listCols.map(({ h, i }) => [h, sum(i)]));
 const eligibleCounted = col('בזב') >= 0 ? sum(col('בזב')) : 0;
 
 const known = new Map(meta.lists.map((l) => [l.letters, l.name]));
+const fullNames = new Map(meta.lists.map((l) => [l.letters, l.fullName ?? l.name]));
 const unknown = listCols.map((c) => c.h).filter((h) => !known.has(h));
 if (unknown.length) console.warn(`lists missing from data/k26-lists.json (shown by letters only): ${unknown.join(' ')}`);
 
@@ -62,7 +63,7 @@ const out = {
 	eligible: meta.eligible,
 	invalid: col('פסולים') >= 0 ? sum(col('פסולים')) : null,
 	lists: [
-		...big.map(([id, votes]) => ({ id, letters: id, name: known.get(id) ?? id, votes })),
+		...big.map(([id, votes]) => ({ id, letters: id, name: known.get(id) ?? id, fullName: fullNames.get(id) ?? id, votes })),
 		...(small.length
 			? [{ id: 'others', letters: '', name: `עוד ${small.length} רשימות`, votes: small.reduce((s, [, v]) => s + v, 0), group: true }]
 			: [])
