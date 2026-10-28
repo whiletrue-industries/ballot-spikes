@@ -129,6 +129,9 @@ export class Stage {
 		el.appendChild(s.app.canvas);
 		// the stage is display-only: no Pixi hit-testing, and touches must scroll the page
 		s.app.stage.eventMode = 'none';
+		// On phones Pixi adds an a11y "touch hook" button at left:-1000px; in an RTL page that becomes
+		// 1000px of sideways scroll. The canvas is aria-hidden decoration (the story text carries the content).
+		(s.app.renderer as unknown as { accessibility?: { _destroyTouchHook?: () => void } }).accessibility?._destroyTouchHook?.();
 		s.app.canvas.style.touchAction = 'auto';
 		s.build();
 		s.layout();
