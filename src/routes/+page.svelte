@@ -4,6 +4,7 @@
 	import history from '$lib/data/history.json';
 	import { BLANK, surplusAwarded, type Step } from '$lib/story/timeline';
 	import type { Stage } from '$lib/stage/Stage';
+	import { joinHe, prefixed } from '$lib/hebrew';
 	import '$lib/styles.css';
 
 	const a = e.allocation;
@@ -61,9 +62,6 @@
 	const awarded = $derived(step === 'bader' ? surplusAwarded(p, surplusN) : 0);
 	const current = $derived(a.surplusSteps[Math.max(0, awarded - 1)]);
 
-	function joinHe(names: string[]) {
-		return names.length <= 1 ? names.join('') : `${names.slice(0, -1).join(', ')} ו${names.at(-1)}`;
-	}
 	const lost = $derived(sens ? sens.changesOnRemove.filter((c) => c.delta < 0) : []);
 	const gained = $derived(sens ? sens.changesOnRemove.filter((c) => c.delta > 0) : []);
 	const addLost = $derived(sens ? sens.changesOnAdd.filter((c) => c.delta < 0) : []);
@@ -295,7 +293,7 @@
 			</ul>
 			{#each dropped as [x, y] (x + y)}
 				<p class="aside">
-					ההסכם בין {nameOf(x)} ל{nameOf(y)} התבטל: {a.failed.includes(x) ? nameOf(x) : nameOf(y)} לא עברה את אחוז החסימה.
+					ההסכם בין {nameOf(x)} {prefixed('ל', nameOf(y))} התבטל: {a.failed.includes(x) ? nameOf(x) : nameOf(y)} לא עברה את אחוז החסימה.
 				</p>
 			{/each}
 		</div>
@@ -357,7 +355,7 @@
 						{/each}
 						<div class="ps-note" class:hit={won.length > 0}>
 							{#if won.length}
-								בזכות ההסכם: {won.map((c) => `+${c.delta} ל${nameOf(c.id)}`).join(', ')}{#if lostTo.length}, על
+								בזכות ההסכם: {won.map((c) => `+${c.delta} ${prefixed('ל', nameOf(c.id))}`).join(', ')}{#if lostTo.length}, על
 									חשבון {joinHe(lostTo.map((c) => nameOf(c.id)))}{/if}.
 							{:else}
 								בלי ההסכם — אותה תוצאה.
@@ -392,20 +390,20 @@
 					אילו {picked.name} הייתה מקבלת <b>{fmt(sens.removeToChange)}</b> קולות פחות,
 					{joinHe(lost.map((c) => nameOf(c.id)))} {lost.length > 1 ? 'היו מאבדות' : 'הייתה מאבדת'}
 					{seatsWord(-lost.reduce((s, c) => s + c.delta, 0))}{#if belowThreshold}&nbsp;— כי הייתה נופלת מתחת לאחוז החסימה{/if}{#if gained.length},
-						ו{joinHe(gained.map((c) => nameOf(c.id)))}
+						{prefixed('ו', joinHe(gained.map((c) => nameOf(c.id))))}
 						{gained.length > 1 ? 'היו מקבלות' : 'הייתה מקבלת'}
 						{lost.reduce((s, c) => s - c.delta, 0) > 1 ? 'אותם' : 'אותו'}{/if}.
 				</p>
 				{#if !lost.some((c) => c.id === picked.id)}
 					<p class="aside">
-						שימו לב: המנדט לא היה נלקח מ{picked.name} עצמה, אלא מהשותפה שלה בהסכם העודפים. הקולות של שתיהן נספרים יחד.
+						שימו לב: המנדט לא היה נלקח {prefixed('מ', picked.name)} עצמה, אלא מהשותפה שלה בהסכם העודפים. הקולות של שתיהן נספרים יחד.
 					</p>
 				{/if}
 				<p class="big">אתם אחד מ־{fmt(sens.removeToChange)} אנשים שעשו את ההבדל.</p>
 				{#if sens.addToChange}
 					<p>
 						ובכיוון השני: עוד {fmt(sens.addToChange)} קולות היו מזיזים מנדט —
-						{#if addGained.length}ל{joinHe(addGained.map((c) => nameOf(c.id)))}{/if}{#if addLost.length}
+						{#if addGained.length}{joinHe(addGained.map((c) => nameOf(c.id)), 'ל')}{/if}{#if addLost.length}
 							, על חשבון {joinHe(addLost.map((c) => nameOf(c.id)))}{/if}.
 					</p>
 				{/if}
