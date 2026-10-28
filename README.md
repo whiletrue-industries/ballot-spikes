@@ -52,3 +52,8 @@ That never affects seats.
 - `src/lib/stage/` — Pixi stage. Everything on it is a function of `(step, progress, pick)` and eased toward that target each frame.
 - `src/lib/story/timeline.ts` — step names shared by the page and the stage.
 - `src/routes/+page.svelte` — all copy, plus the ScrollTrigger wiring.
+
+## Share image
+
+`static/og.jpg` (1200×630) is rendered from the title screen: run `pnpm dev`, then
+`pnpm exec tsx scripts/og-image.ts http://localhost:5173/`.

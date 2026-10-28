@@ -7,6 +7,8 @@
 	import { joinHe, prefixed } from '$lib/hebrew';
 	import '$lib/styles.css';
 
+	const SITE = 'https://whiletrue-industries.github.io/ballot-spikes/';
+	const description = `סיפור בגלילה: איך הפתקים בקלפי הופכים ל־120 חברי כנסת — אחוז החסימה, המודד, הסכמי העודפים ושיטת באדר־עופר, לפי תוצאות הבחירות לכנסת ה־${e.knesset}. ובסוף: כמה הקול שלכם היה שווה.`;
 	const a = e.allocation;
 	const K = e.knesset;
 	const lists = e.lists.filter((l) => !l.group);
@@ -117,10 +119,22 @@
 
 <svelte:head>
 	<title>מפתק למנדט — איך קולות הופכים למנדטים</title>
-	<meta
-		name="description"
-		content="סיפור בגלילה: איך הפתקים בקלפי הופכים ל־120 חברי כנסת — אחוז החסימה, המודד, הסכמי העודפים ושיטת באדר־עופר."
-	/>
+	<meta name="description" content={description} />
+	<link rel="canonical" href={SITE} />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="he_IL" />
+	<meta property="og:site_name" content="מפתק למנדט" />
+	<meta property="og:title" content="מפתק למנדט — איך קולות הופכים למנדטים" />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content={SITE} />
+	<meta property="og:image" content="{SITE}og.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="פתקי הצבעה מפוזרים, ובמרכז הכותרת: מפתק למנדט" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="מפתק למנדט — איך קולות הופכים למנדטים" />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content="{SITE}og.jpg" />
 </svelte:head>
 
 <div class="stage" bind:this={stageEl} aria-hidden="true"></div>
