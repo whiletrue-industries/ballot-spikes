@@ -1,14 +1,14 @@
-name: Fetch results & deploy
+name: Deploy
 
+# Results are refreshed by scripts/update-results.sh on a machine with Chrome (the committee's site
+# refuses CI runners and headless browsers); each push of new data redeploys the site.
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: '17 * * * *' # hourly while the count settles
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -27,22 +27,6 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-
-      # The committee's site may be unreachable from GitHub's runners; if so, the committed data is used.
-      - name: Fetch latest results
-        id: fetch
-        continue-on-error: true
-        env:
-          RESULTS_URL: ${{ vars.RESULTS_URL }}
-        run: pnpm results
-
-      - name: Commit refreshed data
-        if: steps.fetch.outcome == 'success'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/k26.json
-          git diff --cached --quiet || (git commit -m "Update Knesset 26 results" && git push)
 
       - run: pnpm test
       - run: pnpm build

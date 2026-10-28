@@ -67,8 +67,16 @@ body {
 	font-size: 0.95rem;
 	transform: rotate(-8deg);
 }
-.partial {
+.asof {
 	margin-inline-start: auto;
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	color: var(--ink);
+	font-family: var(--mono);
+	font-size: 0.72rem;
+}
+.partial {
 	color: var(--stamp);
 	border: 1.5px solid var(--stamp);
 	padding: 0 0.5rem;
@@ -379,6 +387,13 @@ b {
 @media (max-width: 819px) {
 	html {
 		font-size: 16px;
+	}
+	.letterhead {
+		padding: 0.5rem 0.7rem;
+		font-size: 0.68rem;
+	}
+	.letterhead > span:nth-child(2) {
+		display: none;
 	}
 	.story {
 		width: auto;

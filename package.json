@@ -17,6 +17,7 @@
 		"@sveltejs/kit": "^2.70.3",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@types/node": "^26.6.5",
+		"playwright-core": "~1.59.1",
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"tsx": "^4.23.15",

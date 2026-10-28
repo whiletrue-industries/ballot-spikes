@@ -43,6 +43,17 @@
 		window.history.replaceState(null, '', url);
 	}
 
+	const asOf = e.fetchedAt
+		? new Date(e.fetchedAt).toLocaleString('he-IL', {
+				timeZone: 'Asia/Jerusalem',
+				day: 'numeric',
+				month: 'numeric',
+				year: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			})
+		: null;
+
 	const picked = $derived(pick && pick !== BLANK ? listById[pick] : null);
 	const sens = $derived(pick && pick !== BLANK ? e.sensitivity[pick] : null);
 	const awarded = $derived(step === 'bader' ? surplusAwarded(p, surplusN) : 0);
@@ -113,9 +124,10 @@
 <header class="letterhead">
 	<span class="seal">מ</span>
 	<span>מפתק למנדט · הבחירות לכנסת ה־{K}</span>
-	{#if e.status === 'partial'}
-		<span class="partial">תוצאות חלקיות · {e.countedPercent ?? '?'}% נספרו</span>
-	{/if}
+	<span class="asof">
+		{#if asOf}התוצאות נכון ל־{asOf}{/if}
+		{#if e.status === 'partial'}<span class="partial">חלקיות · {e.countedPercent ?? '?'}% נספרו</span>{/if}
+	</span>
 </header>
 
 <main class="story">
@@ -386,7 +398,8 @@
 		<div class="card colophon">
 			<h3>על הנתונים</h3>
 			<p>
-				{e.source}{#if e.fetchedAt}, נכון ל־{new Date(e.fetchedAt).toLocaleString('he-IL')}{/if}. החישוב לפי חוק
+				{e.source}{#if asOf}, התוצאות נכון ל־{asOf}{/if}{#if e.officialTime}
+					(עדכון ועדת הבחירות: {e.officialTime}){/if}. החישוב לפי חוק
 				הבחירות לכנסת: אחוז חסימה 3.25%, מודד כללי, הסכמי עודפים (רק בין רשימות שעברו) ושיטת באדר־עופר.
 			</p>
 			<p>האתר הוא פרויקט עצמאי ואינו קשור לוועדת הבחירות המרכזית.</p>

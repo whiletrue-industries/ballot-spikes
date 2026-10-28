@@ -17,6 +17,7 @@ export interface Election {
 	status: 'final' | 'partial';
 	source: string;
 	fetchedAt?: string;
+	officialTime?: string | null;
 	countedPercent: number | null;
 	eligible: number;
 	invalid: number | null;
