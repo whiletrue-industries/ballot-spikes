@@ -432,11 +432,12 @@
 		<div class="card colophon">
 			<h3>על הנתונים</h3>
 			<p>
-				{e.source}{#if asOf}, התוצאות נכון ל־{asOf}{/if}{#if e.officialTime}
-					(עדכון ועדת הבחירות: {e.officialTime}){/if}. החישוב לפי חוק
+				{e.source}{#if asOf}, התוצאות נכון ל־<bdi>{asOf}</bdi>{/if}{#if e.officialTime}{' '}(עדכון ועדת
+					הבחירות: <bdi>{e.officialTime}</bdi>){/if}. החישוב לפי חוק
 				הבחירות לכנסת: אחוז חסימה 3.25%, מודד כללי, הסכמי עודפים (רק בין רשימות שעברו) ושיטת באדר־עופר.
 			</p>
 			<p>האתר הוא פרויקט עצמאי ואינו קשור לוועדת הבחירות המרכזית.</p>
+			<p class="credit">נבנה על ידי <b>אדם קריב</b></p>
 		</div>
 	</section>
 </main>

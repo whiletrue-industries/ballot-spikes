@@ -490,6 +490,18 @@ b {
 	font-size: 0.8rem;
 	color: var(--muted);
 }
+.colophon .credit {
+	margin: 1rem 0 0;
+	padding-top: 0.7rem;
+	border-top: 1px dashed rgba(27, 27, 27, 0.25);
+	font-size: 0.9rem;
+	color: var(--ink);
+}
+.colophon .credit b {
+	font-family: var(--head);
+	font-weight: 400;
+	font-size: 1.05rem;
+}
 
 @media (max-width: 819px) {
 	html {
