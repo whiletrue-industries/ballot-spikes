@@ -545,6 +545,9 @@ b {
 		font-size: 0.68rem;
 		gap: 0.4rem;
 	}
+	.wide-only {
+		display: none;
+	}
 	.story {
 		width: auto;
 		margin: 0 0.8rem;

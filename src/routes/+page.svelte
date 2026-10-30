@@ -48,6 +48,9 @@
 		window.history.replaceState(null, '', url);
 	}
 
+	// Counting finished but not yet certified (the committee publishes final results ~8 days after the vote).
+	const countDone = e.status !== 'final' && (e.countedPercent ?? 0) >= 99.9;
+	const sourceLabel = countDone ? 'ועדת הבחירות המרכזית — תוצאות אמת (הספירה הושלמה, טרם אושרו סופית)' : e.source;
 	const asOf = e.fetchedAt
 		? new Date(e.fetchedAt).toLocaleString('he-IL', {
 				timeZone: 'Asia/Jerusalem',
@@ -164,7 +167,8 @@
 	<span>מפתק למנדט · הבחירות לכנסת ה־{K}</span>
 	<span class="asof">
 		{#if asOf}התוצאות נכון ל־{asOf}{/if}
-		{#if e.status === 'partial'}<span class="partial">חלקיות · {e.countedPercent ?? '?'}% נספרו</span>{/if}
+		{#if countDone}<span class="partial">הספירה הושלמה<span class="wide-only">{' · '}טרם אושרו סופית</span></span>
+		{:else if e.status !== 'final'}<span class="partial">חלקיות · {e.countedPercent ?? '?'}% נספרו</span>{/if}
 	</span>
 </header>
 
@@ -483,7 +487,7 @@
 		<div class="card colophon">
 			<h3>על הנתונים</h3>
 			<p>
-				{e.source}{#if asOf}, התוצאות נכון ל־<bdi>{asOf}</bdi>{/if}{#if e.officialTime}{' '}(עדכון ועדת
+				{sourceLabel}{#if asOf}, התוצאות נכון ל־<bdi>{asOf}</bdi>{/if}{#if e.officialTime}{' '}(עדכון ועדת
 					הבחירות: <bdi>{e.officialTime}</bdi>){/if}. החישוב לפי חוק
 				הבחירות לכנסת: אחוז חסימה 3.25%, מודד כללי, הסכמי עודפים (רק בין רשימות שעברו) ושיטת באדר־עופר.
 			</p>
